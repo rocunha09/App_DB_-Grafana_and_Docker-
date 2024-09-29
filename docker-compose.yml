@@ -1,0 +1,46 @@
+services:
+  php_app:
+    build: .  
+    networks:
+      - oversee-network
+    volumes:
+      - ./html:/var/www/html
+    ports:
+      - "8080:80"
+    depends_on:
+      - grafana
+  
+  mysql:
+    image: mysql:latest
+    container_name: mysql-oversee
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: oversee
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - oversee-network
+    ports:
+      - "3306:3306"
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    depends_on:
+      - mysql
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana.ini:/etc/grafana/grafana.ini 
+    networks:
+      - oversee-network
+    ports:
+      - "3000:3000"
+
+volumes:
+  mysql-data:
+  grafana-data:
+
+networks:
+  oversee-network:
