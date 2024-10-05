@@ -24,4 +24,4 @@ exec-grafana:
 	docker exec -it grafana /bin/bash
 
 clean-volumes:
-	docker volume rm oversee_grafana-data oversee_mysql-data
+	docker volume rm oversee_grafana-data oversee_mysql-data   
