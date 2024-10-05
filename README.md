@@ -72,8 +72,8 @@ INSERT INTO tb_quadro_eletrico (id_cliente) VALUES (1);
 INSERT INTO tb_quadro_disjuntor (id_quadro, id_disjuntor) 
 VALUES (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1, 10);
 
-DDELIMITER $$
 DROP PROCEDURE IF EXISTS insert_fake_coleta_quadro;
+DELIMITER $$
 CREATE PROCEDURE insert_fake_coleta_quadro()
 BEGIN
     DECLARE i INT DEFAULT 0;
@@ -113,8 +113,8 @@ DELIMITER ;
 CALL insert_fake_coleta_quadro();
 
 
-DELIMITER $$
 DROP PROCEDURE IF EXISTS insert_fake_coleta_disjuntor;
+DELIMITER $$
 CREATE PROCEDURE insert_fake_coleta_disjuntor()
 BEGIN
     DECLARE i INT DEFAULT 0;
@@ -133,6 +133,33 @@ CALL insert_fake_coleta_disjuntor();
 
 ### lendo tamanho do banco: 
 ```SQL
+SELECT
+    r_tensao, 
+    r_corrente, 
+    r_potencia, 
+    s_tensao, 
+    s_corrente, 
+    s_potencia, 
+    t_tensao, 
+    t_corrente, 
+    t_potencia, 
+    created_at
+FROM
+    tb_coleta_quadro;
+
+SELECT
+    id_disjuntor,
+    status,
+    created_at AS "time"
+FROM
+    tb_coleta_disjuntor
+WHERE
+    id_disjuntor = 1
+ORDER BY
+    created_at DESC
+LIMIT 1;
+
+
 
 
 SELECT 
